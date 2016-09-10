@@ -72,13 +72,17 @@ public class Game extends Canvas implements Runnable {
 			createBufferStrategy(3); // trippleBuffering
 			return;
 		}
+		
+		screen.render();
+
+		for (int i = 0; i < pixels.length; i++) {
+			pixels[i] = screen.pixels[i];
+		}
 
 		Graphics g = bs.getDrawGraphics();
-		
-		// all graphics we need, need to get here
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, getWidth(), getHeight());
-		
+
+		// all graphics we need, need to get here:
+		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		
 		g.dispose(); // render image
 		bs.show(); // show next buffer
