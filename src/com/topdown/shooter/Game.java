@@ -1,10 +1,16 @@
 package com.topdown.shooter;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
+
+import com.topdown.shooter.graphics.Screen;
 
 
 public class Game extends Canvas implements Runnable {
@@ -18,9 +24,16 @@ public class Game extends Canvas implements Runnable {
 	private JFrame	frame;
 	private boolean	running	= false;
 	
+	private Screen screen;
+
+	private BufferedImage	image	= new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+	private int[]			pixels	= ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+	
 	public Game() {
 		Dimension size = new Dimension(width * scale, height * scale);
 		setPreferredSize(size);
+		
+		screen = new Screen(width, height);
 
 		frame = new JFrame();
 	}
@@ -42,10 +55,10 @@ public class Game extends Canvas implements Runnable {
 
 	}
 	
-	public void run() {
+	public void run() { // called by thread start
 		while (running) {
-			update();
-			render();
+			update(); // Method 60/s
+			render(); // Method as often as possible
 		}
 	}
 
@@ -56,9 +69,19 @@ public class Game extends Canvas implements Runnable {
 	public void render() {
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
-			createBufferStrategy(3);
+			createBufferStrategy(3); // trippleBuffering
+			return;
 		}
-		return;
+
+		Graphics g = bs.getDrawGraphics();
+		
+		// all graphics we need, need to get here
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, getWidth(), getHeight());
+		
+		
+		g.dispose(); // render image
+		bs.show(); // show next buffer
 	}
 	
 	
