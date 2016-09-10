@@ -1,4 +1,5 @@
 2 Methoden:
- -render
- -update
-   damit das Spiel nicht unterschiedlich unterschiedlich schnell läuft wird die update methode in einem bestimmten intervall aufgerufen und die render methode so oft wie möglich 
+	-render
+	-update
+   		damit das Spiel nicht unterschiedlich unterschiedlich schnell läuft wird die update methode in einem bestimmten intervall aufgerufen und die render methode so oft wie möglich
+   		Tripple Buffering für SpeedImprovments 
