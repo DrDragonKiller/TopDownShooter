@@ -7,30 +7,30 @@ import javax.swing.JFrame;
 
 
 public class Game extends Canvas implements Runnable {
-
+	
 	private static final long	serialVersionUID	= -3894242138547079386L;
 	public static int			width				= 300;
 	public static int			height				= width / 16 * 9;
 	public static int			scale				= 3;
-
+	
 	private Thread	thread;
 	private JFrame	frame;
 	private boolean	running	= false;
-
+	
 	public Game() {
 		Dimension size = new Dimension(width * scale, height * scale);
 		setPreferredSize(size);
-		
+
 		frame = new JFrame();
 	}
-
+	
 	public synchronized void start() {
 		running = true;
 		thread = new Thread(this, "Display");
 		thread.start();
 	}
-
-
+	
+	
 	public synchronized void stop() {
 		running = false;
 		try {
@@ -38,15 +38,24 @@ public class Game extends Canvas implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
-	}
 
+	}
+	
 	public void run() {
 		while (running) {
-			System.out.println("Running...");
+			update();
+			render();
 		}
 	}
 
+	public void update() {
+
+	}
+
+	public void render() {
+
+	}
+	
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.frame.setResizable(false);
@@ -56,7 +65,7 @@ public class Game extends Canvas implements Runnable {
 		game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		game.frame.setLocationRelativeTo(null);
 		game.frame.setVisible(true);
-		
+
 		game.start();
 	}
 }
