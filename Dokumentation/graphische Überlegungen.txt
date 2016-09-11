@@ -1,2 +1,3 @@
 Spielfeld bestehend aus Tiles
-Tile 16*16 Pixel groﬂ
+Spielfeld 32*32 Tiles
+Tile 4*4 Pixel groﬂ
