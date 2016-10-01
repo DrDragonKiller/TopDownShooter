@@ -1,7 +1,9 @@
 package com.topdown.shooter;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -9,6 +11,7 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import com.topdown.shooter.entity.mob.Player;
 import com.topdown.shooter.graphics.Screen;
 import com.topdown.shooter.input.Keyboard;
 import com.topdown.shooter.level.Level;
@@ -27,6 +30,7 @@ public class Game extends Canvas implements Runnable {
 	private JFrame	 frame;
 	private Keyboard key;
 	private Level	 level;
+	private Player	 player;
 	private boolean	 gameRunning = false;
 	
 	private Screen screen;
@@ -42,6 +46,7 @@ public class Game extends Canvas implements Runnable {
 		frame = new JFrame();
 		key = new Keyboard();
 		level = new RandomLevel(32, 32);
+		player = new Player(key);
 
 		addKeyListener(key);
 		
@@ -100,14 +105,10 @@ public class Game extends Canvas implements Runnable {
 		stop();
 	}
 
-	int x = 0, y = 0;
 
 	public void update() {
 		key.update();
-		if (key.up) y--;
-		if (key.down) y++;
-		if (key.left) x--;
-		if (key.right) x++;
+		player.update();
 	}
 
 
@@ -119,7 +120,10 @@ public class Game extends Canvas implements Runnable {
 		}
 		
 		screen.clear();
-		level.render(x, y, screen);
+		int xScroll = player.x - screen.getWidth() / 2;
+		int yScroll = player.y - screen.getHeight() / 2;
+		level.render(xScroll, yScroll, screen);
+		player.render(screen);
 
 		for (int i = 0; i < pixels.length; i++) {
 			pixels[i] = screen.getPixels()[i];
@@ -129,6 +133,10 @@ public class Game extends Canvas implements Runnable {
 
 		// all graphics we need, need to get here:
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+
+		// g.setColor(Color.WHITE);
+		// g.setFont(new Font("Verdana", 0, 50));
+		// g.drawString("X: " + player.x + ", Y: " + player.y, 450, 400);
 		
 		g.dispose(); // render image
 		bs.show(); // show next buffer

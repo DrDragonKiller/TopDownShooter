@@ -3,6 +3,7 @@ package com.topdown.shooter.graphics;
 import java.awt.Color;
 import java.util.Random;
 
+import com.topdown.shooter.entity.mob.Player;
 import com.topdown.shooter.level.tile.Tile;
 
 
@@ -14,7 +15,7 @@ public class Screen {
 	public final int  MAP_SIZE_MASK	= MAP_SIZE - 1;
 	private final int PIXEL_SIZE	= 4;		   // 2^PixelSize
 
-	public int xOFfset, yOffset;
+	public int xOffset, yOffset;
 	
 	public int[] tiles = new int[MAP_SIZE * MAP_SIZE];
 	
@@ -56,7 +57,7 @@ public class Screen {
 	
 	
 	public void renderTile(int xp, int yp, Tile tile) {
-		xp -= xOFfset;
+		xp -= xOffset;
 		yp -= yOffset;
 		for (int y = 0; y < tile.sprite.SIZE; y++) {
 			int ya = y + yp;
@@ -69,9 +70,29 @@ public class Screen {
 		}
 	}
 	
+	
+	public void renderPlayer(int xp, int yp, Sprite sprite, boolean xFlip, boolean yFlip) {
+		xp -= xOffset;
+		yp -= yOffset;
+		for (int y = 0; y < 32; y++) {
+			int ya = y + yp, ys = y;
+			if (yFlip) ys = 31 - y;
+
+			for (int x = 0; x < 32; x++) {
+				int xa = x + xp, xs = x;
+				if (xFlip) xs = 31 - x;
+				
+				if (xa < -32 || xa >= width || ya < 0 || ya >= height) break; // renders only tiles on screen
+				if (xa < 0) xa = 0;
+				int colour = sprite.pixels[xs + ys * 32];
+				if (colour != 0xFFFF00FF) getPixels()[xa + ya * width] = colour; // test for transparent violett => transparent
+			}
+		}
+	}
+
 	public void setOffset(int xOffset, int yOffset) {
+		this.xOffset = xOffset;
 		this.yOffset = yOffset;
-		xOFfset = xOffset;
 	}
 }
 
