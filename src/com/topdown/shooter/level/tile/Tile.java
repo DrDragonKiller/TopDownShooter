@@ -13,6 +13,13 @@ public class Tile {
 	public static Tile grass	   = new GrassTile(Sprite.grass);
 	public static Tile grassFlower = new GrassFlowerTile(Sprite.grassFlower);
 	public static Tile grassStone  = new GrassStoneTile(Sprite.grassStone);
+	public static Tile pathTop  = new GrassStoneTile(Sprite.path_top);
+	public static Tile pathRight  = new GrassStoneTile(Sprite.path_right);
+	public static Tile pathLeft  = new GrassStoneTile(Sprite.path_left);
+	public static Tile pathBottom  = new GrassStoneTile(Sprite.path_bottom);
+	public static Tile pathInnercorner  = new GrassStoneTile(Sprite.path_innercorner);
+	public static Tile pathOuttercorner  = new GrassStoneTile(Sprite.path_outtercorner);
+	public static Tile pathMiddle  = new GrassStoneTile(Sprite.path_middle);
 
 	public Tile(Sprite sprite) {
 		this.sprite = sprite;
