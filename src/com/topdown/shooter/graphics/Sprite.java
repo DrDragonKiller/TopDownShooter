@@ -28,6 +28,15 @@ public class Sprite {
 
 	public static Sprite player_right_1	= new Sprite(32, 1, 6, SpriteSheet.tiles);
 	public static Sprite player_right_2	= new Sprite(32, 1, 7, SpriteSheet.tiles);
+	
+	public static Sprite path_middle	= new Sprite(16, 0, 2, SpriteSheet.tiles);
+	public static Sprite path_top	= new Sprite(16, 1, 2, SpriteSheet.tiles);
+	public static Sprite path_right	= new Sprite(16, 2, 2, SpriteSheet.tiles);
+	public static Sprite path_bottom	= new Sprite(16, 3, 2, SpriteSheet.tiles);
+	public static Sprite path_left	= new Sprite(16, 4, 2, SpriteSheet.tiles);
+	public static Sprite path_innercorner	= new Sprite(16, 5, 2, SpriteSheet.tiles);
+	public static Sprite path_outtercorner	= new Sprite(16, 6, 2, SpriteSheet.tiles);
+	
 
 
 	public Sprite(int size, int x, int y, SpriteSheet sheet) {

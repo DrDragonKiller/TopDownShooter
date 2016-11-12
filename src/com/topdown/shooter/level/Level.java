@@ -65,6 +65,10 @@ public class Level {
 				return Tile.grassFlower;
 			case 5:
 				return Tile.grassStone;
+			case 6:
+				return Tile.pathInnercorner;
+			case 7:
+				return Tile.pathLeft;
 			default:
 				return Tile.voidTile;
 		}
