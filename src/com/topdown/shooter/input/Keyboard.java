@@ -2,35 +2,61 @@ package com.topdown.shooter.input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 
 public class Keyboard implements KeyListener {
 	
-	private boolean[] keys = new boolean[300];
-	public boolean	  up, down, left, right;
+	private boolean[]	  keysTriggered	= new boolean[525];
+	Map<Integer, Boolean> keyTypedTests	= new HashMap<Integer, Boolean>() {
+											private static final long serialVersionUID = 2298572452421699418L;
+											
+											{
+												put(KeyEvent.VK_1, false);
+												put(KeyEvent.VK_2, false);
+											}
+										};
+	public boolean		  up, down, left, right, space, number1, number2;
 
 	public void update() {
-		up = keys[KeyEvent.VK_UP] || keys[KeyEvent.VK_W];
-		down = keys[KeyEvent.VK_DOWN] || keys[KeyEvent.VK_S];
-		left = keys[KeyEvent.VK_LEFT] || keys[KeyEvent.VK_A];
-		right = keys[KeyEvent.VK_RIGHT] || keys[KeyEvent.VK_D];
+		up = keysTriggered[KeyEvent.VK_UP] || keysTriggered[KeyEvent.VK_W];
+		down = keysTriggered[KeyEvent.VK_DOWN] || keysTriggered[KeyEvent.VK_S];
+		left = keysTriggered[KeyEvent.VK_LEFT] || keysTriggered[KeyEvent.VK_A];
+		right = keysTriggered[KeyEvent.VK_RIGHT] || keysTriggered[KeyEvent.VK_D];
+		space = keysTriggered[KeyEvent.VK_SPACE];
+		number1 = keyTypedTests.get(KeyEvent.VK_1);
+		number2 = keyTypedTests.get(KeyEvent.VK_2);
+		// resetTypedKeys();
 		
-		for (int i = 0; i < keys.length; i++) {
-			if (keys[i]) {
-				System.out.println("KEY: " + i);
+		for (int i = 0; i < keysTriggered.length; i++) {
+			if (keysTriggered[i]) {
 			}
 		}
 	}
 
 	public void keyPressed(KeyEvent e) {
-		keys[e.getKeyCode()] = true;
+		keysTriggered[e.getKeyCode()] = true;
 	}
 	
 	public void keyReleased(KeyEvent e) {
-		keys[e.getKeyCode()] = false;
+		keysTriggered[e.getKeyCode()] = false;
+		final int charKey = e.getKeyChar();
+		if (keyTypedTests.containsKey(charKey)) {
+			keyTypedTests.put(charKey, true);
+		}
 	}
 	
 	public void keyTyped(KeyEvent e) {
+		
 	}
+
+	public void resetTypedKeys() {
+		for (Entry<Integer, Boolean> entry : keyTypedTests.entrySet()) {
+			keyTypedTests.put(entry.getKey(), false);
+		}
+	}
+
 
 }

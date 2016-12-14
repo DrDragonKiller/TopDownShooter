@@ -11,7 +11,7 @@ public class voidTile extends Tile {
 	}
 	
 	public void render(int x, int y, Screen screen) {
-		screen.renderTile(x << screen.getPIXEL_SIZE(), y << screen.getPIXEL_SIZE(), this);
+		screen.renderTile(x << screen.getPIXEL_SIZE(), y << screen.getPIXEL_SIZE(), this, "N");
 	}
 	
 }
